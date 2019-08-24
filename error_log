@@ -1,0 +1,5 @@
+[05-Jul-2019 01:56:41 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICS.php on line 67
+[05-Jul-2019 01:57:27 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICS.php on line 67
+[05-Jul-2019 02:00:30 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
+[05-Jul-2019 02:01:07 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
+[05-Jul-2019 02:01:52 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
