@@ -24,3 +24,5 @@ Route::resource('/register', 'RegisterController');
 Route::delete('deletemultiple', 'RegisterController@deleteAll');
 Route::patch('update_slots/{id}','SeminarController@updateSlots');
 Route::get("seminar/link/{id}","SeminarController@genrateLink");
+Route::get("sendemails","CronController@remindermail");
+Route::get("houremails","CronController@hour_reminder");

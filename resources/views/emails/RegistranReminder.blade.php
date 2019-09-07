@@ -383,7 +383,7 @@
                                             <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->description !!}</span></p>
                                             <p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
                                             <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
-                                            <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$seminar->venue_address}}</span></p>
+                                            <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
                                             <p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
                                             <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Date & time:</strong> </span></p>
                                             <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{\Carbon\Carbon::parse($seminar->seminar_date)->format('m/d/Y')}}&nbsp;{{\Carbon\Carbon::parse($seminar->start_time)->format('g:i A')}}&nbsp;- &nbsp;{{\Carbon\Carbon::parse($seminar->end_time)->format('g:i A')}}</span></p>

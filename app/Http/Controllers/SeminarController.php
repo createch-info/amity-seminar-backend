@@ -98,10 +98,11 @@ class SeminarController extends Controller
         ]);
 
         $request['description']="<pre>".$request->input('description')."</pre>";
+        $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
 
         $countSEM = Seminar::whereDate("seminar_date", Carbon::parse($request->seminar_date)->format("Y-m-d"))->count();
         if($countSEM >= 1){
-            return \response([
+            return response([
                 'errors'=>[
                      'seminar_date'=>['Seminar already exists on this date']
                 ],
@@ -134,24 +135,28 @@ class SeminarController extends Controller
         $sem = Seminar::find($id);
         if(!empty($sem->id))
         {
-        $today = Carbon::today()->format("m/d/Y - H:i");
-       
-        $data = Seminar::withCount("registrants")->with("schedules")->find($id);
-        $semdate=Carbon::parse($data['seminar_date']);
-        $data['_correct_date']=Carbon::parse($data['seminar_date']);
-        $data['numberofregistrants'] = 0;
-        $data['empty_seat'] = $data['capacity']- $data['registrants_count'];
-        $data = $data->toArray();
-        $data['isFull'] =intval($data['registrants_count']) >= $data['capacity'];
-        $data['isPast'] =!Carbon::now()->lessThan($semdate);
-        $data['seminar_date']=Carbon::parse($data['seminar_date']." ".$data['start_time'])->format("m/d/Y - g:i A");
-        $data['schedules'] = Arr::pluck($data['schedules'], 'schedules');
-        $data['end_time'] = Carbon::parse($data['end_time'])->format("g:i A");
-        $data['day'] = $semdate->day;
-        $data['month'] = $semdate->month;
-        $data['formated_description']=strip_tags($data['description']);
+            $data = Seminar::withCount("registrants")->with("schedules")->find($id);
+            $semdate=Carbon::parse($data['seminar_date'].$data['start_time']);
 
-        return response()->json($data);
+            $data['date'] = Carbon::parse($data['seminar_date'].$data['start_time'])->toDateTimeString();
+
+            $data['_correct_date']=Carbon::parse($data['seminar_date']);
+            $data['numberofregistrants'] = 0;
+            $data['empty_seat'] = $data['capacity']- $data['registrants_count'];
+            $data = $data->toArray();
+            $data['isFull'] =intval($data['registrants_count']) >= $data['capacity'];
+            $data['isPast'] =!Carbon::now()->lessThanOrEqualTo($data['date']);
+            $data['seminar_date']=Carbon::parse($data['seminar_date']." ".$data['start_time'])->format("m/d/Y - g:i A");
+
+            $data['schedules'] = Arr::pluck($data['schedules'], 'schedules');
+            $data['end_time'] = Carbon::parse($data['end_time'])->format("g:i A");
+            $data['end_time_sc'] = Carbon::parse($data['end_time'])->format("H:i");
+            $data['day'] = $semdate->day;
+            $data['month'] = $semdate->month;
+            $data['formated_description']=strip_tags($data['description']);
+            $data['formated_venue_address']=strip_tags($data['venue_address']);
+
+            return response()->json($data);
         }
     }
 
@@ -308,6 +313,7 @@ class SeminarController extends Controller
         ]);
 
         $request['description']="<pre>".$request->input('description')."</pre>";
+        $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
 
         $data = $request->only(['title', 'capacity','venue_address', 'description', 'reminder_numbers']);
        
@@ -441,7 +447,7 @@ class SeminarController extends Controller
             }
             $sem->isReg= true;
              $sem->amount =$sem->cost_per_seat;
-            Mail::to($regs->email)->send(new DeleteSem($sem,$payment_method));
+            Mail::to($regs->email)->send(new DeleteSem($sem,$payment_method,"Your registration for seminar \"".$sem->title."\" is cancelled"));
         }
 
 
@@ -498,7 +504,7 @@ class SeminarController extends Controller
            $deleteReg->isReg = false;
            $deleteReg->amount = $delete1->cost_per_seat;
 
-           Mail::to($deleteReg->email)->send(new DeleteSem($delete1,$deleteReg->payment_method));
+           Mail::to($deleteReg->email)->send(new DeleteSem($delete1,$deleteReg->payment_method,"Amity seminar cancelled"));
 
              if($deleteReg->choice_of_communication=="Email & Text"){
                  $del_date=Carbon::parse($delete1->seminar_date)->format("m-d-Y");
