@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use PayPal\Api\Amount;
@@ -278,15 +279,15 @@ class SeminarController extends Controller
 
         $paypal_conf = config('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential(
-                "AT1L2reKiixvOpfviW4EasOTaQXKhigqLpIIbBeHQfUWPYi_XWoWat8ppdsYZMwdmHsCj1dx6NnG36YN",
-                "EEKhvVFj21ZQRcCgWWpxt9zjxNAGT1onvyHRg_RoVhZXgb7IOgjxsdg96rxhTWrjqk1utVwKe7nBRjp1"
+                "AUFnvE0LVsJKtenY0t3fHlcpKeESQbPxtBIkym7lCqo5oFbm3ewIfaQeXpQ5qqQE3jcEglZNSmLWlpKx",
+                "EC9JqwZ5Rv8sDPokp9MbUgLHnmePZVFB69cgJuQAlIq2EBgaYZVp5MGBJgBXc3Z11i6VD1pRlYi1NWTr"
             )
         );
         $this->_api_context->setConfig(array(
-            'mode' => 'sandbox',
-            'log.LogEnabled' => false,
-            'log.FileName' => '../PayPal.log',
-            'log.LogLevel' => 'DEBUG', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
+            'mode' => 'live',
+            'log.LogEnabled' => true,
+            'log.FileName' => 'PayPal.log',
+            'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
             'cache.enabled' => false,
         ));
     }
@@ -359,7 +360,7 @@ class SeminarController extends Controller
 
             $from=$fromstartdate.'T'.$fromstarttime;
             $to=$fromstartdate.'T'.$tostarttime;
-
+            $location=strip_tags($sem->venue_address);
 
            //$to = $to->toString();
             $ics_props = array(
@@ -371,7 +372,7 @@ class SeminarController extends Controller
           "SUMMARY:$sem->title",
           "DTSTART;TZID:$from",
           "DTEND;TZID:$to",
-          "LOCATION:$sem->venue_address",
+          "LOCATION:$location",
           "DESCRIPTION: ",
           "STATUS:CONFIRMED",
             "SEQUENCE:1",
@@ -438,16 +439,17 @@ class SeminarController extends Controller
                 $refundedSale['mode'] = false;
                 $refundedSale['value'] = $ex->getMessage();
             }
-            //if ($refundedSale['mode'] === true) {
+            if ($refundedSale['mode'] === true) {
                 $sem->registrants()->where("id", $delete_item)->delete();
-            //}
-            if($regs->choice_of_communication=="Email & Text"){
+                 if($regs->choice_of_communication=="Email & Text"){
 
                $this->sendSMS(countryCode.$regs->phoneNumber,"Your registration for seminar \"".$sem->title."\" is cancelled. Please check your email for details and call us with any questions at 303-690-2749.");
             }
             $sem->isReg= true;
              $sem->amount =$sem->cost_per_seat;
             Mail::to($regs->email)->send(new DeleteSem($sem,$payment_method,"Your registration for seminar \"".$sem->title."\" is cancelled"));
+            }
+           
         }
 
 
@@ -500,6 +502,7 @@ class SeminarController extends Controller
             } catch (\Exception $ex) {
                 $refundedSale['mode'] = false;
                 $refundedSale['value'] = $ex->getMessage();
+                Log::info('Trabsation status'.$refundedSale['value']);
             }
            $deleteReg->isReg = false;
            $deleteReg->amount = $delete1->cost_per_seat;
