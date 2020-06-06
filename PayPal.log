@@ -1,0 +1,200 @@
+[18-09-2019 13:57:33] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[18-09-2019 13:57:34] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[18-09-2019 13:57:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/7NU58941TA5574827/refund
+[18-09-2019 13:57:36] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[18-09-2019 13:57:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/7NU58941TA5574827/refund
+[18-09-2019 13:57:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[18-09-2019 13:59:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[18-09-2019 13:59:55] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[18-09-2019 13:59:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/9JU5292465412123F/refund
+[18-09-2019 13:59:58] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:17:52] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:17:52] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:17:52] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0NV83268DP155221U/refund
+[26-09-2019 10:17:52] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 404
+[26-09-2019 10:17:53] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 404 when accessing https://api.paypal.com/v1/payments/sale/0NV83268DP155221U/refund. {"name":"INVALID_RESOURCE_ID","message":"Requested resource ID was not found.","information_link":"https://developer.paypal.com/docs/api/payments/#errors","debug_id":"2c9e6392eec39"}
+[26-09-2019 10:17:54] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/76L136322D0771428/refund
+[26-09-2019 10:17:54] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 404
+[26-09-2019 10:17:54] PayPal\Core\PayPalHttpConnection : ERROR: Got Http response code 404 when accessing https://api.paypal.com/v1/payments/sale/76L136322D0771428/refund. {"name":"INVALID_RESOURCE_ID","message":"Requested resource ID was not found.","information_link":"https://developer.paypal.com/docs/api/payments/#errors","debug_id":"3cfeae4d76b1f"}
+[26-09-2019 10:18:16] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:18:16] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:18:16] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/6M7611990R1539105/refund
+[26-09-2019 10:18:19] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:18:36] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:18:37] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:18:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/8JU55690WC941624N/refund
+[26-09-2019 10:18:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:18:40] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/28V25049WN563240P/refund
+[26-09-2019 10:18:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:18:43] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3DU79947EN574582D/refund
+[26-09-2019 10:18:46] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:18:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3DU79947EN574582D/refund
+[26-09-2019 10:18:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:19:03] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:19:03] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:19:03] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0AK68016S4740931N/refund
+[26-09-2019 10:19:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:19:06] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/1A990829UF919131C/refund
+[26-09-2019 10:19:08] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:19:20] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:19:21] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:19:21] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4C17654783353802J/refund
+[26-09-2019 10:19:23] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[26-09-2019 10:49:04] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[26-09-2019 10:49:04] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[26-09-2019 10:49:04] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4H305799U3277725G/refund
+[26-09-2019 10:49:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[27-09-2019 13:03:59] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[27-09-2019 13:03:59] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[27-09-2019 13:03:59] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/04S80822RV6577443/refund
+[27-09-2019 13:04:04] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[27-09-2019 13:05:38] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[27-09-2019 13:05:38] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[27-09-2019 13:05:38] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/00W151125G405674J/refund
+[27-09-2019 13:05:41] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[27-09-2019 13:05:41] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/00W151125G405674J/refund
+[27-09-2019 13:05:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[30-09-2019 11:28:06] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[30-09-2019 11:28:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[30-09-2019 11:28:06] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0H242871HU4036032/refund
+[30-09-2019 11:28:10] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[30-09-2019 11:28:35] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[30-09-2019 11:28:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[30-09-2019 11:28:35] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/288261718R8195408/refund
+[30-09-2019 11:28:38] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[30-09-2019 13:37:32] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[30-09-2019 13:37:32] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[30-09-2019 13:37:33] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/87378292AY8060236/refund
+[30-09-2019 13:37:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[04-10-2019 09:45:31] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[04-10-2019 09:45:32] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[04-10-2019 09:45:32] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3XH20568YV053353A/refund
+[04-10-2019 09:45:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[04-10-2019 09:45:41] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3XH20568YV053353A/refund
+[04-10-2019 09:45:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[04-10-2019 09:45:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3WF8503401916580D/refund
+[04-10-2019 09:45:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[04-10-2019 09:46:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[04-10-2019 09:46:17] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[04-10-2019 09:46:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/2H3529689M800601S/refund
+[04-10-2019 09:46:20] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[04-10-2019 10:25:49] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[04-10-2019 10:25:50] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[04-10-2019 10:25:50] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0JV06106RU582721E/refund
+[04-10-2019 10:25:52] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[08-10-2019 10:34:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[08-10-2019 10:34:48] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[08-10-2019 10:34:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0JV06106RU582721E/refund
+[08-10-2019 10:34:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[08-10-2019 10:34:57] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3AA26679BH425544S/refund
+[08-10-2019 10:35:00] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[08-10-2019 10:35:05] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/620457573W829322B/refund
+[08-10-2019 10:35:07] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[08-10-2019 10:35:13] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/6FS792596A3168632/refund
+[08-10-2019 10:35:16] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[05-12-2019 14:51:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[05-12-2019 14:51:37] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[05-12-2019 14:51:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/20V42470P0043270N/refund
+[05-12-2019 14:51:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[09-12-2019 10:47:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[09-12-2019 10:47:55] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[09-12-2019 10:47:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/06G92697PP814230C/refund
+[09-12-2019 10:47:58] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[17-12-2019 10:48:38] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[17-12-2019 10:48:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-12-2019 10:48:39] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/27R55314EE135783V/refund
+[17-12-2019 10:48:41] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[13-01-2020 09:23:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[13-01-2020 09:23:38] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[13-01-2020 09:23:38] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/6UY61670YB873934N/refund
+[13-01-2020 09:23:41] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-01-2020 06:18:54] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[14-01-2020 06:18:55] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-01-2020 06:18:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4PT65222X1087872Y/refund
+[14-01-2020 06:18:57] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-01-2020 14:21:28] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[14-01-2020 14:21:29] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-01-2020 14:21:29] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/7HD71812VT1881441/refund
+[14-01-2020 14:21:33] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-01-2020 14:21:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/8S4611943N228441J/refund
+[14-01-2020 14:21:37] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-01-2020 14:26:00] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[14-01-2020 14:26:01] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-01-2020 14:26:01] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4RW276037V188915P/refund
+[14-01-2020 14:26:03] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[23-01-2020 09:45:38] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[23-01-2020 09:45:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[23-01-2020 09:45:39] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/56M02482NH083392A/refund
+[23-01-2020 09:45:42] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[23-01-2020 09:45:44] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/85250585F6299994T/refund
+[23-01-2020 09:45:46] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[23-01-2020 15:08:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[23-01-2020 15:08:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[23-01-2020 15:08:26] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3AY77123MV349213Y/refund
+[23-01-2020 15:08:28] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[23-01-2020 15:08:29] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/94A59471PU4170900/refund
+[23-01-2020 15:08:32] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[24-01-2020 17:11:32] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[24-01-2020 17:11:33] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[24-01-2020 17:11:33] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/20K06493HC396462A/refund
+[24-01-2020 17:11:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[24-01-2020 17:11:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/20K06493HC396462A/refund
+[24-01-2020 17:11:39] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[28-01-2020 09:36:36] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[28-01-2020 09:36:36] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[28-01-2020 09:36:36] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/2J3448184S4781352/refund
+[28-01-2020 09:36:38] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[10-02-2020 11:44:27] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[10-02-2020 11:44:27] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[10-02-2020 11:44:27] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/1F6330362A090253C/refund
+[10-02-2020 11:44:31] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-02-2020 10:26:22] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[14-02-2020 10:26:22] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-02-2020 10:26:22] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/3AH35236WR3433038/refund
+[14-02-2020 10:26:24] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[18-02-2020 20:07:32] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[18-02-2020 20:07:33] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[18-02-2020 20:07:33] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/5GB86215PF513525A/refund
+[18-02-2020 20:07:35] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[24-02-2020 17:24:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[24-02-2020 17:24:17] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[24-02-2020 17:24:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0LP19321LR2894254/refund
+[24-02-2020 17:24:21] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[13-03-2020 11:08:41] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[13-03-2020 11:08:42] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[13-03-2020 11:08:42] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4BY50580RK477611W/refund
+[13-03-2020 11:08:46] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[13-03-2020 11:09:13] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[13-03-2020 11:09:13] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[13-03-2020 11:09:13] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/0EJ27829K57377052/refund
+[13-03-2020 11:09:16] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[13-03-2020 11:09:21] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/1P43796304964251M/refund
+[13-03-2020 11:09:24] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[16-03-2020 19:30:05] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[16-03-2020 19:30:06] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[16-03-2020 19:30:06] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/1TV0982016694681M/refund
+[16-03-2020 19:30:10] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[16-03-2020 19:30:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[16-03-2020 19:30:34] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[16-03-2020 19:30:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/70J22750YX706843D/refund
+[16-03-2020 19:30:37] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[16-03-2020 19:31:02] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[16-03-2020 19:31:02] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[16-03-2020 19:31:02] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4E721173AA7773111/refund
+[16-03-2020 19:31:07] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[01-06-2020 21:25:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[01-06-2020 21:25:34] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[01-06-2020 21:25:34] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/8TE632207J1200305/refund
+[01-06-2020 21:25:36] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[02-06-2020 11:54:44] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[02-06-2020 11:54:44] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[02-06-2020 11:54:44] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/9MR291018C603470Y/refund
+[02-06-2020 11:54:46] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[02-06-2020 11:56:02] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[02-06-2020 11:56:02] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[02-06-2020 11:56:02] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/52V83226TR1035148/refund
+[02-06-2020 11:56:07] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[02-06-2020 11:56:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/oauth2/token
+[02-06-2020 11:56:25] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[02-06-2020 11:56:25] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.paypal.com/v1/payments/sale/4JY977039Y0642732/refund
+[02-06-2020 11:56:27] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201

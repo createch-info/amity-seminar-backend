@@ -13,15 +13,17 @@ class ReminderEmail extends Mailable
 
     public $seminar;
     public $payment_method;
+    public $accommodation;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($seminar,$payment_method)
+    public function __construct($seminar,$payment_method,$accommodation)
     {
         $this->seminar = $seminar;
         $this->payment_method = $payment_method;
+        $this->accommodation=$accommodation;
     }
 
     /**

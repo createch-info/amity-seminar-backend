@@ -8,7 +8,7 @@
 	<!--[if !mso]><!-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!--<![endif]-->
-	<title>Amity Seminar Registration Successful</title>
+	<title>Amity Event Registration Successful</title>
 	<!--[if !mso]><!-->
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 	<!--<![endif]-->
@@ -279,8 +279,25 @@
 				display: block !important;
 				max-height: none !important;
 			}
-			
+
 		}
+
+        .btn-join
+        {
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #009933;
+            color:white!important;
+            padding:18px;
+            font-size: 25px;
+
+        }
+
+        .web-details{
+            font-size: 12px !important;
+            line-height: 32px;
+            margin: 0;
+        }
 	</style>
 </head>
 
@@ -335,7 +352,7 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 10px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 											<div style="color:#052d3d;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 												<div style="line-height: 14px; font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #052d3d;">
-													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>Thank you for successfully registering for seminar "{{$seminar->title}}" at Amity Healthcare Group!  </strong></span></p>
+													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>Thank you for successfully registering for event "{{$seminar->title}}" at Amity Healthcare Group!  </strong></span></p>
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -383,24 +400,55 @@
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Description:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->description !!}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+                                                    @endif
+
+
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Date & time:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{\Carbon\Carbon::parse($seminar->seminar_date)->format('m/d/Y')}}&nbsp;{{\Carbon\Carbon::parse($seminar->start_time)->format('g:i A') }}&nbsp;- &nbsp;{{\Carbon\Carbon::parse($seminar->end_time)->format('g:i A') }}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Cost:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">${{$seminar->cost_per_seat}}</span></p>
-													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @if($payment_method!='free')
+                                                        <p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @endif
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Additional Accommodation Request:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$accommodation}}</span></p>
+                                                    @endif
+
+                                                    @if($seminar->type=='webinar')
+                                                        <div style="background-color: #fff;padding: 30px;">
+                                                            <h1 style="text-align: center">How To Join The Webinar</h1>
+                                                            <br/>
+                                                            <b style="font-size: 15px">Click the link to join the webinar at the specified time and date</b>
+
+                                                            <br/><br/>
+                                                            <div style="text-align: center;padding:20px;">
+                                                                <a href="{{$seminar->url}}" style="color: white;" class="btn-join">Join Webinar</a>
+                                                            </div>
+                                                            <br/><br/>
+                                                            <i style="line-height: 16px; font-size: 12px; text-align: center; margin: 0;color: #999999">Note: This link should not be shared with others; it is unique to you.</i>
+
+                                                            <br/><br/>
+                                                            <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Webinar Details:</strong> </span></p>
+                                                            <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><pre>{!! $seminar->webinarDetails  !!} </pre></span></p>
+                                                            {{--                                                        <span class="web-details" style="font-size: 18px;">{ $seminar->webinarDetails !!}</span>--}}
+                                                        </div>
+                                                    @endif
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 0px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 											<div style="color:#fc7318;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:0px;padding-left:10px;">
 												<div style="line-height: 14px; font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #fc7318;">
-													<p style="line-height: 16px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 14px; color: #999999;"><em><span style="line-height: 16px; font-size: 14px;">Link to save the seminar to your outlook calendar: <a style="text-decoration: underline; color: #2190E3;" href="{{$seminar->outlook}}" target="_blank" rel="noopener">link</a></span></em></span></p>
+													<p style="line-height: 16px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 14px; color: #999999;"><em><span style="line-height: 16px; font-size: 14px;">Link to save the event to your outlook calendar: <a style="text-decoration: underline; color: #2190E3;" href="{{$seminar->outlook}}" target="_blank" rel="noopener">link</a></span></em></span></p>
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->

@@ -9,7 +9,7 @@ use App\Seminar;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-define('countryCode','1');
+define('countryCodeId','1');
 
 class CronController extends Controller
 {
@@ -46,7 +46,7 @@ class CronController extends Controller
    }
 
     public function remindermail()
-    {                                                                                                                                                                                       
+    {
         Log::info('-------------------Day Cron Executed from here --------------');
         $date=Carbon::now();
         $data=Seminar::with('schedules','registrants')->whereDate('seminar_date','>',$date->format("Y-m-d"))->get();
@@ -57,7 +57,7 @@ class CronController extends Controller
         {
             foreach ($d->schedules as $schedule)
             {
-               
+
                 switch ($schedule->schedules)
                 {
                     case 1:
@@ -73,11 +73,11 @@ class CronController extends Controller
                                 Log::info('Registrants'.$registrant);
                                     if($registrant->choice_of_communication=='Email & Text')
                                     {
-                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                         $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
+                                         $this->sendSMS(countryCodeId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                                     }
                                     else
-                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
+                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
 
                             }
                         }
@@ -97,11 +97,11 @@ class CronController extends Controller
                                  Log::info('Registrants'.$registrant);
                               if($registrant->choice_of_communication=='Email & Text')
                                     {
-                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                        $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
+                                        $this->sendSMS(countryCodeId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                                     }
                                     else
-                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
+                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
 
                             }
                         }
@@ -113,7 +113,7 @@ class CronController extends Controller
                         $diff = 1 + Carbon::parse($date)->diffInDays($seminardate,false);
                         Log::info('Seminar date: '.$seminardate);
                         Log::info('Difference of 2 days: '.$diff);
-                        
+
                         if($diff==2)
                         {
                             foreach ($d->registrants as $registrant)
@@ -121,12 +121,12 @@ class CronController extends Controller
                                  Log::info('Registrants'.$registrant);
                              if($registrant->choice_of_communication=='Email & Text')
                                     {
-                                        
-                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                         $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+
+                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
+                                         $this->sendSMS(countryCodeId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                                     }
                                     else
-                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
+                                        Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
 
                             }
                         }
@@ -146,7 +146,7 @@ class CronController extends Controller
                              if($registrant->choice_of_communication=='Email & Text')
                                     {
                                          Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                         $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+                                         $this->sendSMS(countryCodeId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                                     }
                                     else
                                         Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
@@ -161,7 +161,7 @@ class CronController extends Controller
         return "Successfully Sent";
     }
 
-   
+
     public function hour_reminder()
     {
         $date=Carbon::now()->format('Y-m-d');
@@ -170,7 +170,7 @@ class CronController extends Controller
         Log::info('-------------Hourly Cron Executed----------------');
 
         $data=Seminar::with('schedules','registrants')->whereBetween('seminar_date',[$date,$dateDay2])->get();
-        
+
         foreach ($data as $d)
         {
             foreach ($d->schedules as $schedule)
@@ -194,15 +194,15 @@ class CronController extends Controller
 
                            if($registrant->choice_of_communication=='Email & Text')
                             {
-                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
+                                $this->sendSMS(countryCodeId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                             }
                             else
-                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
+                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
                         }
                     }
                 }
-                
+
                 else if($schedule->schedules==5)
                 {
                     $diff = $end->diffInMinutes($start,false);
@@ -216,11 +216,11 @@ class CronController extends Controller
 
                            if($registrant->choice_of_communication=='Email & Text')
                             {
-                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
-                                $this->sendSMS(countryCode.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
+                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
+                                $this->sendSMS(countryCodeIdId.$registrant->phoneNumber, "This is a reminder for seminar \"".$d->title."\". Please check your email for details and call us with any questions at 303-690-2749.");
                             }
                             else
-                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal'));
+                                Mail::to($registrant->email)->send(new ReminderEmail($d,'paypal',$registrant->accommodation));
                         }
                     }
                 }

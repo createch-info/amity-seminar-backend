@@ -3,3 +3,12 @@
 [05-Jul-2019 02:00:30 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
 [05-Jul-2019 02:01:07 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
 [05-Jul-2019 02:01:52 America/Denver] PHP Fatal error:  Cannot declare class ICS, because the name is already in use in /home/uk5thzu47pza/public_html/testing/education/app/Http/Controllers/ICSCLASS.php on line 67
+[28-Nov-2019 06:00:01 UTC] PHP Warning:  include(/home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/composer/../../app/Http/Kernel.php): failed to open stream: No such file or directory in /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/composer/ClassLoader.php on line 444
+[28-Nov-2019 06:00:01 UTC] PHP Warning:  include(): Failed opening '/home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/composer/../../app/Http/Kernel.php' for inclusion (include_path='.:/opt/alt/php72/usr/share/pear') in /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/composer/ClassLoader.php on line 444
+[28-Nov-2019 06:00:01 UTC] PHP Fatal error:  Uncaught ReflectionException: Class App\Http\Kernel does not exist in /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php:790
+Stack trace:
+#0 /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php(790): ReflectionClass->__construct('App\\Http\\Kernel')
+#1 /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php(667): Illuminate\Container\Container->build('App\\Http\\Kernel')
+#2 /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php(265): Illuminate\Container\Container->resolve('App\\Http\\Kernel', Array, false)
+#3 /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php(787): Illuminate\Container\Container->Illuminate\Container\{closure}(Object(Illuminate\Foundation\Application), Array)
+#4 /home/uk5th in /home/uk5thzu47pza/amityhealthcaregroup.com/education/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 790

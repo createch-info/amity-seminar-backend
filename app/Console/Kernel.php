@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\cron::class
+
     ];
 
     /**
@@ -24,6 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('hour:update')
+            ->everyMinute();
+
         // $schedule->command('inspire')
         //          ->hourly();
     }

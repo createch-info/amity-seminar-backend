@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Seminar extends Model
 {
     use SoftDeletes;
-    protected $fillable=['lat','lng','title','capacity','seminar_date','start_time','timeformat1','end_time','timeformat2','venue_address','description','cost_per_seat','reminder_numbers'];
+    protected $fillable=['lat','lng','title','capacity','seminar_date','start_time','timeformat1','end_time','timeformat2','venue_address','description','cost_per_seat','reminder_numbers','type','webinarDetails','url'];
 
     protected $appends =['FormatedCost'];
 
@@ -24,7 +24,7 @@ class Seminar extends Model
 
     public function registrants(){
         return $this->hasMany('App\Register','seminar_id','id');
-        
+
     }
 
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Register extends Model
 {
     use SoftDeletes;
-   protected $fillable = ['payment_id','name','seminar_id','email','phoneNumber','companyName','applicable','choice_of_communication','payment_method'];
+   protected $fillable = ['payment_id','name','seminar_id','email','phoneNumber','companyName','applicable','choice_of_communication','payment_method','accommodation','seminar_fees'];
 
    protected $appends =['FormatNumber'];
 

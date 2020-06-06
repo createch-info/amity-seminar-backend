@@ -1,9 +1,9 @@
 <?php
 return [
-    'client_id' => "AT1L2reKiixvOpfviW4EasOTaQXKhigqLpIIbBeHQfUWPYi_XWoWat8ppdsYZMwdmHsCj1dx6NnG36YN",
-    'secret' => "EEKhvVFj21ZQRcCgWWpxt9zjxNAGT1onvyHRg_RoVhZXgb7IOgjxsdg96rxhTWrjqk1utVwKe7nBRjp1",
+    'client_id' => "AUFnvE0LVsJKtenY0t3fHlcpKeESQbPxtBIkym7lCqo5oFbm3ewIfaQeXpQ5qqQE3jcEglZNSmLWlpKx",
+    'secret' => "EC9JqwZ5Rv8sDPokp9MbUgLHnmePZVFB69cgJuQAlIq2EBgaYZVp5MGBJgBXc3Z11i6VD1pRlYi1NWTr",
     'settings' => array(
-        'mode' => "sandbox",
+        'mode' => "live",
         'http.ConnectionTimeOut' => 30,
     ),
 ];

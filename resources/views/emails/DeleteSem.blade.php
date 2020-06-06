@@ -8,7 +8,7 @@
 	<!--[if !mso]><!-->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!--<![endif]-->
-	<title>Amity Seminar Registration Cancelled</title>
+	<title>Amity Event Registration Cancelled</title>
 	<!--[if !mso]><!-->
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
 	<!--<![endif]-->
@@ -334,8 +334,8 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 0px; padding-bottom: 10px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 											<div style="color:#052d3d;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 												<div style="line-height: 14px; font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #052d3d;">
-												    
-													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>Your registration for seminar "{{$seminar->title}}" has been cancelled.  </strong></span></p>
+
+													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>Your registration for event "{{$seminar->title}}" has been cancelled.  </strong></span></p>
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -380,23 +380,33 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 15px; padding-bottom: 15px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 											<div style="color:#4C4643;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px;">
 												<div style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #4C4643;">
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Seminar Title:</strong> </span></p>
+													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Event Title:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$seminar->title}}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Description:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->description !!}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+                                                    @endif
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Date & time:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{\Carbon\Carbon::parse($seminar->seminar_date)->format('m/d/Y')}}&nbsp;{{\Carbon\Carbon::parse($seminar->start_time)->format('g:i A')}}&nbsp;- &nbsp;{{\Carbon\Carbon::parse($seminar->end_time)->format('g:i A')}}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Cost:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">${{$seminar->cost_per_seat}}</span></p>
-													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @if($payment_method!='free')
+                                                        <p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @endif
+
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Additional Accommodation Request:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$accommodation}}</span></p>
+                                                    @endif
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -430,7 +440,12 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 											<div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 												<div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-													<p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px;color:red;">We're sorry to hear you are not able to attend our seminar. <br/>Refund is initiated and will be processed in the next 3-5 business days. We hope to see you at another Amity seminar soon! If there are any questions, please reach us by replying to this email or give us a call at 303-690-2749</span></em></span></p>
+                                                    @if($payment_method =='free')
+													    <p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px;color:red;">We're sorry to hear you are not able to attend our event.<br/> We hope to see you at another Amity event soon! If there are any questions, please reach us by replying to this email or give us a call at 303-690-2749</span></em></span></p>
+													   
+                                                    @else
+                                                        <p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px;color:red;">We're sorry to hear you are not able to attend our event. <br/>Refund is initiated and will be processed in the next 3-5 business days. We hope to see you at another Amity event soon! If there are any questions, please reach us by replying to this email or give us a call at 303-690-2749</span></em></span></p>
+                                                    @endif
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -473,10 +488,10 @@
 												</tbody>
 											</table>-->
 											@else
-											
+
 											<div style="color:#052d3d;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 												<div style="line-height: 14px; font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #052d3d;">
-													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>This is to inform you that seminar "{{$seminar->title}}" is cancelled by Amity administration!  </strong></span></p>
+													<p style="line-height: 36px; font-size: 12px; text-align: center; margin: 0;"><span style="font-size: 30px;"><strong>This is to inform you that event "{{$seminar->title}}" is cancelled by Amity administration!  </strong></span></p>
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -521,23 +536,31 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 15px; padding-bottom: 15px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
 											<div style="color:#4C4643;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:15px;padding-right:10px;padding-bottom:15px;padding-left:10px;">
 												<div style="font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; font-size: 12px; line-height: 14px; color: #4C4643;">
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Seminar Title:</strong> </span></p>
+													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Event Title:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$seminar->title}}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Description:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->description !!}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Venue:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{!! $seminar->venue_address !!}</span></p>
+                                                    @endif
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Date & time:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{\Carbon\Carbon::parse($seminar->seminar_date)->format('m/d/Y')}}&nbsp;{{$seminar->start_time }}&nbsp;- &nbsp;{{$seminar->end_time }}</span></p>
 													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Cost:</strong> </span></p>
 													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">${{$seminar->cost_per_seat}}</span></p>
-													<p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
-													<p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @if($payment_method!='free')
+                                                        <p style="font-size: 12px; line-height: 21px; margin: 0;"> </p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Payment method:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$payment_method}}</span></p>
+                                                    @endif
+                                                    @if($seminar->type=='seminar')
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;"><strong>Additional Accommodation Request:</strong> </span></p>
+                                                        <p style="font-size: 12px; line-height: 32px; margin: 0;"><span style="font-size: 18px;">{{$accommodation}}</span></p>
+                                                    @endif
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->
@@ -571,7 +594,11 @@
 											<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif"><![endif]-->
 											<div style="color:#555555;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;line-height:120%;padding-top:10px;padding-right:10px;padding-bottom:10px;padding-left:10px;">
 												<div style="font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 14px; color: #555555;">
-													<p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px; color:red;">We apologize for the inconvenience! Refund is initiated for all registrants and will be processed in 3-5 business days.<br/> We hope to see you at another seminar soon. Please check our website: https://www.amityhealthcaregroup.com for all offered seminars.</span></em></span></p>
+                                                    @if($payment_method!='free')
+                                                        <p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px; color:red;">We apologize for the inconvenience! Refund is initiated for all registrants and will be processed in 3-5 business days.<br/> We hope to see you at another event soon. Please check our website: https://www.amityhealthcaregroup.com for all offered events.</span></em></span></p>
+                                                    @else
+                                                        <p style="font-size: 14px; line-height: 20px; text-align: center; margin: 0;"><span style="font-size: 17px; mso-ansi-font-size: 18px;"><em><span style="line-height: 20px; font-size: 17px; mso-ansi-font-size: 18px; color:red;">We apologize for the inconvenience!<br/> We hope to see you at another event soon. Please check our website: https://www.amityhealthcaregroup.com for all offered events.</span></em></span></p>
+                                                    @endif
 												</div>
 											</div>
 											<!--[if mso]></td></tr></table><![endif]-->

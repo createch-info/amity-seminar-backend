@@ -24,8 +24,9 @@ define('countryCode','1');
 
 class SeminarController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource.c
      *
      * @return \Illuminate\Http\Response
      */
@@ -43,6 +44,9 @@ class SeminarController extends Controller
                 $str_start_date = Carbon::parse($str_start_date);
 
                 $events[] = [
+                    'date_'=>$str_start_date->format('F d,Y'),
+                    'start_time' =>Carbon::parse($value->start_time)->format('g:i A'),
+                    'end_time' =>Carbon::parse($value->end_time)->format('g:i A'),
                     'end' => $str_start_date,
                     'date' => $str_start_date,
                     'title' => $value->title,
@@ -55,6 +59,44 @@ class SeminarController extends Controller
 
 
         // return view('seminar.scheduleseminar',['data'=> $data,'calendar' => $calendar]);
+    }
+
+
+    public function eventList()
+    {
+        $events = [
+                'data'=>[],
+            ];
+        $data = Seminar::where("seminar_date",'>=',Carbon::now()->format("Y-m-d"))->orderBy('seminar_date')->paginate(1000);
+
+        if ($data) {
+            foreach ($data as $key => $value) {
+
+                $registranCount = $value->registrants()->count();
+
+                $str_start_date = Carbon::parse($value->seminar_date);
+
+
+                $listDateFormat=$str_start_date->format("l ")." ".$str_start_date->formatLocalized('%b,%d,%Y');
+
+
+                array_push($events['data'],[
+                    'date' => $listDateFormat,
+                    'title' => $value->title,
+                    'description' => $value->description,
+                    'format'=>$value->title.": ".strip_tags($value->description),
+                    'id' => $value->id,
+                ]);
+
+                $events['pagination']=[
+                    'loadmore'=>!empty($data->toArray()['next_page_url'])?$data->toArray()['next_page_url']:false,
+                    ];
+
+            }
+        }
+
+
+        return response()->json($events);
     }
 
 
@@ -84,35 +126,59 @@ class SeminarController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->type=='seminar')
+        {
+            $this->validate($request, [
+                'title' => 'required|min:5',
+                'capacity' => 'required|integer',
+                'seminar_date' => ['required','date'],
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'venue_address' => 'required',
+                'description' => 'required',
+                'cost_per_seat' => 'required',
+                'reminder_numbers' => 'required',
+                'schedules' => 'required|array|min:1'
+            ]);
 
-        $this->validate($request, [
-            'title' => 'required|min:5',
-            'capacity' => 'required|integer',
-            'seminar_date' => ['required','date'],
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'venue_address' => 'required',
-            'description' => 'required',
-            'cost_per_seat' => 'required',
-            'reminder_numbers' => 'required',
-            'schedules' => 'required|array|min:1'
-        ]);
+            $request['webinarDetails']='';
+            $request['url']='';
+            $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
+        }else
+        if($request->type=='webinar')
+        {
+            $this->validate($request, [
+                'title' => 'required|min:5',
+                'capacity' => 'required|integer',
+                'seminar_date' => ['required','date'],
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'webinarDetails' => 'required',
+                'url'=>'required',
+                'description' => 'required',
+                'cost_per_seat' => 'required',
+                'reminder_numbers' => 'required',
+                'schedules' => 'required|array|min:1'
+            ]);
+
+            $request['venue_address']='';
+        }
 
         $request['description']="<pre>".$request->input('description')."</pre>";
-        $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
 
         $countSEM = Seminar::whereDate("seminar_date", Carbon::parse($request->seminar_date)->format("Y-m-d"))->count();
+
         if($countSEM >= 1){
             return response([
                 'errors'=>[
-                     'seminar_date'=>['Seminar already exists on this date']
+                     'seminar_date'=>['Event already exists on this date']
                 ],
                 'message'=>'The given data was invalid.'
             ],422);
         }
-        $data = $request->only(['title', 'capacity', 'seminar_date', 'start_time', 'end_time', 'venue_address', 'description', 'cost_per_seat', 'reminder_numbers', 'lat', 'lng']);
-        $data['seminar_date'] = Carbon::parse($data['seminar_date'])->format("Y-m-d");
 
+        $data = $request->only(['title', 'capacity', 'seminar_date', 'start_time', 'end_time', 'venue_address', 'description', 'cost_per_seat', 'reminder_numbers', 'lat', 'lng','type','webinarDetails','url']);
+        $data['seminar_date'] = Carbon::parse($data['seminar_date'])->format("Y-m-d");
 
         $seminar = Seminar::create($data);
 
@@ -134,12 +200,17 @@ class SeminarController extends Controller
     {
 
         $sem = Seminar::find($id);
+
         if(!empty($sem->id))
         {
             $data = Seminar::withCount("registrants")->with("schedules")->find($id);
             $semdate=Carbon::parse($data['seminar_date'].$data['start_time']);
+            $desc=$data['description'];
 
             $data['date'] = Carbon::parse($data['seminar_date'].$data['start_time'])->toDateTimeString();
+
+            $desc=substr($desc, 0,-6);
+            $desc=substr($desc,5);
 
             $data['_correct_date']=Carbon::parse($data['seminar_date']);
             $data['numberofregistrants'] = 0;
@@ -148,13 +219,14 @@ class SeminarController extends Controller
             $data['isFull'] =intval($data['registrants_count']) >= $data['capacity'];
             $data['isPast'] =!Carbon::now()->lessThanOrEqualTo($data['date']);
             $data['seminar_date']=Carbon::parse($data['seminar_date']." ".$data['start_time'])->format("m/d/Y - g:i A");
-
+            $data['isPaid']=($sem->cost_per_seat>0)?true:false;
             $data['schedules'] = Arr::pluck($data['schedules'], 'schedules');
             $data['end_time'] = Carbon::parse($data['end_time'])->format("g:i A");
             $data['end_time_sc'] = Carbon::parse($data['end_time'])->format("H:i");
             $data['day'] = $semdate->day;
             $data['month'] = $semdate->month;
-            $data['formated_description']=strip_tags($data['description']);
+            $data['formated_description']=$desc;
+//            $data['formated_description']=strip_tags($data['description']);
             $data['formated_venue_address']=strip_tags($data['venue_address']);
 
             return response()->json($data);
@@ -168,7 +240,7 @@ class SeminarController extends Controller
         ]);
         $sem = Seminar::find($id);
         $sem->fill(['capacity' => $request->slot])->save();
-        
+
         return response()->json();
     }
 
@@ -210,25 +282,30 @@ class SeminarController extends Controller
 
 
 
-        $registrants = array_map(function ($item) use ($paymetn_id,$paymetn_method) {
+        $registrants = array_map(function ($item) use ($paymetn_id,$paymetn_method,$semnier) {
             $item['payment_id'] = $paymetn_id;
             $item['payment_method'] = $paymetn_method;
-            $item['companyName']=$item['companyName'] ? $item['companyName'] : ''; 
+            $item['seminar_fees'] = $semnier->cost_per_seat;
+            $item['companyName']=$item['companyName'] ? $item['companyName'] : '';
+            $item['accommodation']=isset($item['accommodation'])?$item['accommodation']:'';
             return $item;
         }, $registrants);
 
+
+        // return $registrants;
+
         $semnier->registrants()->createMany($registrants);
-        
+
         $semnier->outlook = url('seminar/link/'. (string)$semnier->id);
-        
+
         foreach ($registrants as $sendMail){
-            Mail::to($sendMail['email'])->send(new RegistranRegister($semnier,$sendMail['payment_method']));
-            
+            Mail::to($sendMail['email'])->cc(['eg@amityhealthcaregroup.com'])->send(new RegistranRegister($semnier,$sendMail['payment_method'],$sendMail['accommodation']));
+
             if($sendMail['choice_of_communication']=="Email & Text"){
-                $this->sendSMS(countryCode.$sendMail['phoneNumber'], "Thank you for registering for seminar \"".$semnier->title."\". Please check your email for details and call us with any questions at 303-690-2749");
+                $this->sendSMS(countryCode.$sendMail['phoneNumber'], "Thank you for registering for an event \"".$semnier->title."\". Please check your email for details and call us with any questions at 303-690-2749");
             }
-        
-            
+
+
         }
         return \response()->json([true]);
 
@@ -237,21 +314,21 @@ class SeminarController extends Controller
 
 
    public function sendSMS($number,$message){
-       
-        //$data = array("from" => "10907", "to" => [$number],"body"=>$message);
+
+        // $data = array("from" => "10907", "to" => [$number],"body"=>$message);
         $data = array("from" => "+18332867382", "to" => [$number],"body"=>$message);
         $data_string = json_encode($data);
-        //$ch = curl_init('https://sms.api.sinch.com/xms/v1/c29fb3e83dbc416e9db6dc0925e5054e/batches');
+        // $ch = curl_init('https://sms.api.sinch.com/xms/v1/c29fb3e83dbc416e9db6dc0925e5054e/batches');
         $ch = curl_init('https://sms.api.sinch.com/xms/v1/d7f3f825708341ddb4321658abf8fd48/batches');  //TFN API for US number
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'Content-Type: application/json',
-           'Authorization:Bearer a82439f3fb1446a68ef7bae012396446'  //TFN API for US number
-           // 'Authorization:Bearer 233c8c2ebfdb4594b42984d479a498e2'
-           )                                                                       
-        );                                                                                                                   
+          'Authorization:Bearer a82439f3fb1446a68ef7bae012396446'  //TFN API for US number
+            // 'Authorization:Bearer 233c8c2ebfdb4594b42984d479a498e2'
+           )
+        );
         $result = curl_exec($ch);
         curl_close($ch);
    }
@@ -264,7 +341,7 @@ class SeminarController extends Controller
             'registrants.*.email' => 'required|email',
             'registrants.*.applicable' => 'required|in:Applicable,Not Applicable',
             'registrants.*.choice_of_communication' => 'required|in:Email Only,Email & Text',
-           
+
             'registrants.*.name' => 'required',
             'registrants.*.phoneNumber' => 'required',
         ]);
@@ -275,7 +352,7 @@ class SeminarController extends Controller
 
     public function __construct()
     {
-        /** PayPal api context **/
+        /** PayPal api context Live Keys**/
 
         $paypal_conf = config('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential(
@@ -290,6 +367,22 @@ class SeminarController extends Controller
             'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
             'cache.enabled' => false,
         ));
+
+         /** PayPal api context Sandbox Keys**/
+
+        // $paypal_conf = config('paypal');
+        // $this->_api_context = new ApiContext(new OAuthTokenCredential(
+        //         "AT1L2reKiixvOpfviW4EasOTaQXKhigqLpIIbBeHQfUWPYi_XWoWat8ppdsYZMwdmHsCj1dx6NnG36YN",
+        //         "EEKhvVFj21ZQRcCgWWpxt9zjxNAGT1onvyHRg_RoVhZXgb7IOgjxsdg96rxhTWrjqk1utVwKe7nBRjp1"
+        //     )
+        // );
+        // $this->_api_context->setConfig(array(
+        //     'mode' => 'sandbox',
+        //     'log.LogEnabled' => true,
+        //     'log.FileName' => 'PayPal.log',
+        //     'log.LogLevel' => 'ERROR', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
+        //     'cache.enabled' => false,
+        // ));
     }
 
     /**
@@ -301,38 +394,60 @@ class SeminarController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required|min:5',
-            'capacity' => 'required|integer',
-  
-           
-            'venue_address' => 'required',
-            'description' => 'required',
-            
-            'reminder_numbers' => 'required',
-            'schedules' => 'required|array|min:1'
-        ]);
+        if($request->type=='seminar')
+        {
+            $this->validate($request, [
+                'title' => 'required|min:5',
+                'capacity' => 'required|integer',
+
+                'start_time' => 'required',
+                'end_time' => 'required',
+
+                'venue_address' => 'required',
+                'description' => 'required',
+                'cost_per_seat' => 'required',
+
+                'reminder_numbers' => 'required',
+                'schedules' => 'required|array|min:1'
+            ]);
+
+            $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
+
+        }else
+        if($request->type=='webinar')
+        {
+            $this->validate($request, [
+                'title' => 'required|min:5',
+                'capacity' => 'required|integer',
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'webinarDetails' => 'required',
+                'url'=>'required',
+                'description' => 'required',
+                'cost_per_seat' => 'required',
+                'reminder_numbers' => 'required',
+                'schedules' => 'required|array|min:1'
+            ]);
+
+                $request['venue_address']="";
+        }
 
         $request['description']="<pre>".$request->input('description')."</pre>";
-        $request['venue_address']="<pre>".$request->input('venue_address')."</pre>";
 
-        $data = $request->only(['title', 'capacity','venue_address', 'description', 'reminder_numbers']);
-       
+        $data = $request->only(['cost_per_seat','start_time','title', 'capacity','venue_address', 'description', 'reminder_numbers','webinarDetails','url','type']);
+        $data['end_time']=$request->end_time_sc;
+
         $seminar = Seminar::find($id);
         $seminar->schedules()->delete();
         $seminar->update($data);
-        // foreach ($request->schedules as $item) {
-        //     $seminar->schedules()->create(['schedules' => $item]);
 
-        // }
-        
          foreach (array_filter($request->schedules) as $item) {
             $seminar->schedules()->create([
                 'schedules' => $item
             ]);
         }
 
-        return response()->json(['status' => true]);
+        return response()->json(['status' => true,'request'=>$request->all(),'end_time'=>$request->end_time]);
     }
 
     public function updateSlots(Request $request, $id)
@@ -349,7 +464,7 @@ class SeminarController extends Controller
 
     public function genrateLink(Request $request, $id)
     {
-       
+
         $sem = Seminar::find($id);
         if(!empty($sem->id))
         {
@@ -399,8 +514,8 @@ class SeminarController extends Controller
         }
         else
         {
-            return "<b><center><h1>Seminar is deleted by Amity Administration</h1></center></b><br/><br/>
-            <b><center><a href='https://amityhealthcaregroup.com/education'>Back to home</a></center></b>
+            return "<b><center><h1>Event is deleted by Amity Administration</h1></center></b><br/><br/>
+            <b><center><a href='https://amityhealthcaregroup.com/education/#'>Back to home</a></center></b>
             ";
         }
     }
@@ -414,47 +529,85 @@ class SeminarController extends Controller
 
         $sem = Seminar::find($id);
 
-
         foreach ($request->ids as $delete_item) {
 
             $regs =  $sem->registrants()->where("id", $delete_item)->first();
-            
+
             $payment_id = $regs->payment_id;
             $payment_method = $regs->payment_method;
-            $amt = new Amount();
-            $amt->setCurrency('USD')
-                ->setTotal($sem->cost_per_seat);
-            $sale = new Sale();
-//
-            $refundRequest = new RefundRequest();
-            $refundRequest->setAmount($amt);
-//
-            $sale->setId($payment_id);
-            $refundedSale = null;
-            try {
-                $refundedSale['mode'] = true;
-                $status = $sale->refundSale($refundRequest, $this->_api_context);
-                $refundedSale['value'] = $status->toArray();
-            } catch (\Exception $ex) {
-                $refundedSale['mode'] = false;
-                $refundedSale['value'] = $ex->getMessage();
-            }
-            if ($refundedSale['mode'] === true) {
-                $sem->registrants()->where("id", $delete_item)->delete();
-                 if($regs->choice_of_communication=="Email & Text"){
+            $accommodation=$regs->accommodation;
 
-               $this->sendSMS(countryCode.$regs->phoneNumber,"Your registration for seminar \"".$sem->title."\" is cancelled. Please check your email for details and call us with any questions at 303-690-2749.");
+            $isPaid=($regs->seminar_fees>0)?true:false;
+
+            if($isPaid) {
+                $amt = new Amount();
+                $amt->setCurrency('USD')
+                    ->setTotal($regs->seminar_fees);
+                $sale = new Sale();
+
+                $refundRequest = new RefundRequest();
+                $refundRequest->setAmount($amt);
+                
+
+                $sale->setId($payment_id);
+                $refundedSale = null;
+                try {
+                    $refundedSale['mode'] = true;
+                    $status = $sale->refundSale($refundRequest, $this->_api_context);
+                    $refundedSale['value'] = $status->toArray();
+                    Log::info('Transaction status success' . $status);
+
+                }
+                catch (\Exception $ex) {
+                    $refundedSale['mode'] = false;
+                    $refundedSale['value'] = $ex->getMessage();
+                    Log::info('Transaction status exception' . $ex);
+                }
+
+                if ($refundedSale['mode'] === true) {
+                    $sem->registrants()->where("id", $delete_item)->delete();
+                    if ($regs->choice_of_communication == "Email & Text") {
+
+                        $this->sendSMS(countryCode . $regs->phoneNumber, "Your registration for an event \"" . $sem->title . "\" is cancelled. Please check your email for details and call us with any questions at 303-690-2749.");
+                    }
+                    $sem->isReg = true;
+//                    $sem->amount = $sem->cost_per_seat;
+                    $sem->cost_per_seat = $regs->seminar_fees;
+                    Mail::to($regs->email)->cc(['eg@amityhealthcaregroup.com'])->send(new DeleteSem($sem, $payment_method, "Your registration for an event \"" . $sem->title . "\" is cancelled", $accommodation));
+                }
             }
-            $sem->isReg= true;
-             $sem->amount =$sem->cost_per_seat;
-            Mail::to($regs->email)->send(new DeleteSem($sem,$payment_method,"Your registration for seminar \"".$sem->title."\" is cancelled"));
+
+            if(!$isPaid)
+            {
+                Log::info('Inside Not Paid condition');
+                $sem->registrants()->where("id", $delete_item)->delete();
+
+                if ($regs->choice_of_communication == "Email & Text") {
+
+                    $this->sendSMS(countryCode . $regs->phoneNumber, "Your registration for an event \"" . $sem->title . "\" is cancelled. Please check your email for details and call us with any questions at 303-690-2749.");
+                }
+
+                $sem->isReg = true;
+                $sem->cost_per_seat = $regs->seminar_fees;
+
+                Mail::to($regs->email)->cc(['eg@amityhealthcaregroup.com'])->send(new DeleteSem($sem, $payment_method, "Your registration for an event \"" . $sem->title . "\" is cancelled", $accommodation));
             }
-           
+
         }
 
+        $refundedSale['req']=$request->ids;
 
-        return \response()->json($refundedSale);
-        //$sem->registrants()->whereIn("id", $request->ids)->delete();
+       // $sem->registrants()->whereIn("id", $request->ids)->delete();
+
+        if($isPaid) {
+
+            $refundedSale['req']=$request->ids;
+            return \response()->json($refundedSale);
+        }
+
+        if(!$isPaid) {
+            return \response()->json(['Status'=>'Deleted Successfully','req'=>$request->ids]);
+        }
 
     }
 
@@ -485,38 +638,54 @@ class SeminarController extends Controller
     {
         $delete1 = Seminar::find($id);
         $regs = $delete1->registrants()->get();
+
+        $isPaid=($regs->seminar_fees>0)?true:false;
+
         foreach ($regs as $deleteReg){
+            if($isPaid) {
             $amt = new Amount();
             $amt->setCurrency('USD')
-                ->setTotal($delete1->cost_per_seat);
+                ->setTotal($regs->seminar_fees);
             $sale = new Sale();
-//
-            $refundRequest = new RefundRequest();
-            $refundRequest->setAmount($amt);
-//
-            $sale->setId($deleteReg->payment_id);
-            try {
-                $refundedSale['mode'] = true;
-                $status = $sale->refundSale($refundRequest, $this->_api_context);
-                $refundedSale['value'] = $status->toArray();
-            } catch (\Exception $ex) {
-                $refundedSale['mode'] = false;
-                $refundedSale['value'] = $ex->getMessage();
-                Log::info('Trabsation status'.$refundedSale['value']);
-            }
-           $deleteReg->isReg = false;
-           $deleteReg->amount = $delete1->cost_per_seat;
 
-           Mail::to($deleteReg->email)->send(new DeleteSem($delete1,$deleteReg->payment_method,"Amity seminar cancelled"));
+                $refundRequest = new RefundRequest();
+                $refundRequest->setAmount($amt);
+
+                $sale->setId($deleteReg->payment_id);
+                try {
+                    $refundedSale['mode'] = true;
+                    $status = $sale->refundSale($refundRequest, $this->_api_context);
+                    $refundedSale['value'] = $status->toArray();
+                    Log::info('Transaction status Success' . $status);
+                } catch (\Exception $ex) {
+                    $refundedSale['mode'] = false;
+                    $refundedSale['value'] = $ex->getMessage();
+                    Log::info('Transaction status failed' . $ex);
+                }
+            }
+               $deleteReg->isReg = false;
+//               $deleteReg->amount = $delete1->cost_per_seat;
+               $delete1->cost_per_seat = $deleteReg->seminar_fees;
+
+               Mail::to($deleteReg->email)->cc(['eg@amityhealthcaregroup.com'])->send(new DeleteSem($delete1,$deleteReg->payment_method,"Amity Event cancelled",$deleteReg->accommodation));
 
              if($deleteReg->choice_of_communication=="Email & Text"){
                  $del_date=Carbon::parse($delete1->seminar_date)->format("m-d-Y");
                   $del_time=Carbon::parse($delete1->start_time)->format('g:i A')." - ".Carbon::parse($delete1->end_time)->format('g:i A');
 
-                $this->sendSMS(countryCode.$deleteReg->phoneNumber, "Seminar \"".$delete1->title."\" Scheduled for $del_date $del_time, has been cancelled. Please check your email for further instructions and call us with any questions at 303-690-2749");
+                $this->sendSMS(countryCode.$deleteReg->phoneNumber, "Event \"".$delete1->title."\" Scheduled for $del_date $del_time, has been cancelled. Please check your email for further instructions and call us with any questions at 303-690-2749");
                // $this->sendSMS(countryCode.$deleteReg->phoneNumber, "Amity seminar ".$delete1->title." that you registered for, is cancelled. Please check your email ".$deleteReg->email." for all the details and call us with any questions.");
              }
-            if ($refundedSale['mode'] === true) {
+
+            if($isPaid)
+            {
+                if($refundedSale['mode'] === true) {
+                    $deleteReg->delete();
+                }
+            }
+
+            if(!$isPaid)
+            {
                 $deleteReg->delete();
             }
         }

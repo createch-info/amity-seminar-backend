@@ -1,6 +1,11 @@
 <?php
 
+use App\Mail\DeleteSem;
+use App\Seminar;
 use Illuminate\Http\Request;
+
+use App\Mail\RegistranRegister;
+use App\Register;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +18,12 @@ use Illuminate\Http\Request;
 |
 */
 
+
+Route::get('/email',function (){
+    $semnier=Seminar::find(65);
+    return new RegistranRegister($semnier,'paypal','ACCMODATION CONTENT');
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -21,6 +32,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post("admin/login",'LoginController@login');
 
 Route::prefix('admin')->group(function () {
+    Route::get("seminar/eventlist","SeminarController@eventList");
     Route::post("checkValidashion","SeminarController@checkValidashion");
     Route::resource("seminar","SeminarController");
     Route::post("seminar/booking","SeminarController@booking");
@@ -32,4 +44,12 @@ Route::prefix('admin')->group(function () {
     Route::get("sendemails","CronController@remindermail");
     Route::get("houremails","CronController@hour_reminder");
 
+});
+
+
+Route::get('/preview',function ()
+{
+    $semnier=\App\Seminar::find(58);
+//    return $semnier;
+    return new \App\Mail\ReminderEmail($semnier,'paypal','Subject','lahsdouiasj');
 });
